@@ -2,6 +2,7 @@ import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -21,11 +22,15 @@ export default async function Home() {
           <p className="mb-8">
           At CliCare, we prioritize your health above all. Our mission is to provide easy access to high-quality medications and personalized healthcare services, ensuring every client receives the best care and attention they deserve. Your well-being is our top priority.
           </p>
-          <div >
+          <div className="absolute top-4 right-4 space-x-4">
           {userId ? (
               <>
-              
-                
+              <Link href = {"/dashboard"}>
+              <Button>               
+                 View DashBoard
+              </Button>
+              </Link>
+               <UserButton/>
               </>
             ) : (
               <>
@@ -47,6 +52,7 @@ export default async function Home() {
             )}
 
           </div>
+
           </div>
       </div>
       <footer className="mt-8">
