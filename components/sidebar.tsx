@@ -3,6 +3,7 @@ import {
   Bell,
   Bot,
   BotMessageSquare,
+  FileUser,
   LayoutDashboard,
   List,
   ListOrdered,
@@ -92,7 +93,7 @@ export const Sidebar = async () => {
           name: "Medical Records",
           href: "/record/medical-records",
           access: ["admin", "doctor", "nurse"],
-          icon: SquareActivity,
+          icon: FileUser,
         },
         {
           name: "Patient Management",
