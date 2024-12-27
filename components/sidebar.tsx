@@ -94,7 +94,6 @@ export const Sidebar = async () => {
           access: ["admin", "doctor", "nurse"],
           icon: SquareActivity,
         },
-    
         {
           name: "Patient Management",
           href: "/nurse/patient-management",
@@ -125,15 +124,20 @@ export const Sidebar = async () => {
           access: ["patient"],
           icon: Pill,
         },
+      ],
+    },
+    {
+      label: "Service",
+      links: [
         {
           name: "Pharmacy",
           href: "/record/medicine",
           access: ["patient"], 
           icon: Tablets, 
         },
-        
       ],
     },
+    
     {
       label: "System",
       links: [
