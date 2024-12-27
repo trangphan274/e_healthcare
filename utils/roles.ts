@@ -9,6 +9,6 @@ export const checkRole = async (role: Roles) => {
 
 export const getRole = async () => {
     const { sessionClaims } = await auth();
-    const role =  sessionClaims?.metadata.role!.toLowerCase();
+    const role =  sessionClaims?.metadata.role!?.toLowerCase()||"patient";
     return role ;
 };

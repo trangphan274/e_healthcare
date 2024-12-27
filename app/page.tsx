@@ -2,10 +2,15 @@ import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
+import { getRole} from "@/utils/roles"; 
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const { userId } = await auth();
+  const role = await getRole();
+  if (userId && role) {
+    redirect(`/${role}`);
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen p-6">
@@ -22,15 +27,16 @@ export default async function Home() {
           <p className="mb-8">
           At CliCare, we prioritize your health above all. Our mission is to provide easy access to high-quality medications and personalized healthcare services, ensuring every client receives the best care and attention they deserve. Your well-being is our top priority.
           </p>
+
           <div className="absolute top-4 right-4 space-x-4">
           {userId ? (
               <>
-              <Link href = {"/dashboard"}>
-              <Button>               
+              <Link href = {'/${role}'}>
+                <Button>                
                  View DashBoard
               </Button>
               </Link>
-               <UserButton/>
+               
               </>
             ) : (
               <>
