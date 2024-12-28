@@ -1,16 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `insurance_id` on the `Patient` table. All the data in the column will be lost.
-  - You are about to drop the column `insurance_name` on the `Patient` table. All the data in the column will be lost.
-  - You are about to drop the column `phone_number` on the `Patient` table. All the data in the column will be lost.
-  - Added the required column `medical_consent` to the `Patient` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `phone` to the `Patient` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `privacy_consent` to the `Patient` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `service_consent` to the `Patient` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `updated_at` to the `Patient` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('ADMIN', 'NURSE', 'DOCTOR', 'LAB_TECHNICIAN', 'PATIENT', 'CASHIER');
 
@@ -26,19 +13,35 @@ CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE');
 -- CreateEnum
 CREATE TYPE "AppointmentStatus" AS ENUM ('PENDING', 'SCHEDULED', 'CANCELLED', 'COMPLETED');
 
--- AlterTable
-ALTER TABLE "Patient" DROP COLUMN "insurance_id",
-DROP COLUMN "insurance_name",
-DROP COLUMN "phone_number",
-ADD COLUMN     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "gender" "Gender" NOT NULL DEFAULT 'MALE',
-ADD COLUMN     "img" TEXT,
-ADD COLUMN     "insurance_number" TEXT,
-ADD COLUMN     "medical_consent" BOOLEAN NOT NULL,
-ADD COLUMN     "phone" TEXT NOT NULL,
-ADD COLUMN     "privacy_consent" BOOLEAN NOT NULL,
-ADD COLUMN     "service_consent" BOOLEAN NOT NULL,
-ADD COLUMN     "updated_at" TIMESTAMP(3) NOT NULL;
+-- CreateTable
+CREATE TABLE "Patient" (
+    "id" TEXT NOT NULL,
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
+    "date_of_birth" TIMESTAMP(3) NOT NULL,
+    "gender" "Gender" NOT NULL DEFAULT 'MALE',
+    "phone" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "marital_status" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "emergency_contact_name" TEXT NOT NULL,
+    "emergency_contact_number" TEXT NOT NULL,
+    "relation" TEXT NOT NULL,
+    "blood_group" TEXT,
+    "allergies" TEXT,
+    "medical_conditions" TEXT,
+    "medical_history" TEXT,
+    "insurance_provider" TEXT,
+    "insurance_number" TEXT,
+    "privacy_consent" BOOLEAN NOT NULL,
+    "service_consent" BOOLEAN NOT NULL,
+    "medical_consent" BOOLEAN NOT NULL,
+    "img" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Patient_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Doctor" (
@@ -213,6 +216,35 @@ CREATE TABLE "Services" (
     CONSTRAINT "Services_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Medicine" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "price" DOUBLE PRECISION NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "pharmacy_id" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Medicine_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Pharmacy" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "location" TEXT NOT NULL,
+    "contact_info" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Pharmacy_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Patient_email_key" ON "Patient"("email");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Doctor_email_key" ON "Doctor"("email");
 
@@ -257,3 +289,6 @@ ALTER TABLE "Rating" ADD CONSTRAINT "Rating_staff_id_fkey" FOREIGN KEY ("staff_i
 
 -- AddForeignKey
 ALTER TABLE "Rating" ADD CONSTRAINT "Rating_patient_id_fkey" FOREIGN KEY ("patient_id") REFERENCES "Patient"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Medicine" ADD CONSTRAINT "Medicine_pharmacy_id_fkey" FOREIGN KEY ("pharmacy_id") REFERENCES "Pharmacy"("id") ON DELETE CASCADE ON UPDATE CASCADE;
