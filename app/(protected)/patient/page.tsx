@@ -8,16 +8,18 @@ import { redirect } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import { StatSummary } from "@/components/ui/charts/stat-summary";
+import {AppointmentChart} from "@/components/ui/charts/appointment-chart";
 
 const PatientDashboard = async () => {
   const user = await currentUser();
 
   const {
     data,
-    appointmentsCounts,
+    appointmentCounts,
     last5Records,
     totalAppointments,
     availableDoctor,
+    monthlyData,
   } = await getPatientDashBoardStatistics(user?.id!);
 
   console.log(data);
@@ -38,7 +40,7 @@ const PatientDashboard = async () => {
     },
     {
       title: "Cancelled",
-      value: appointmentsCounts?.CANCELLED,
+      value: appointmentCounts?.CANCELLED,
       icon: Briefcase,
       className: "bg-rose-600/25 ",
       iconClassName: "bg-rose-600/25 text-rose-600",
@@ -46,7 +48,7 @@ const PatientDashboard = async () => {
     },
     {
       title: "Pending",
-      value: appointmentsCounts?.PENDING! + appointmentsCounts?.SCHEDULED!,
+      value: appointmentCounts?.PENDING! + appointmentCounts?.SCHEDULED!,
       icon: BriefcaseBusiness,
       className: "bg-yellow-600/15 ",
       iconClassName: "bg-yellow-600/25 text-yellow-600",
@@ -54,13 +56,14 @@ const PatientDashboard = async () => {
     },
     {
       title: "Completed",
-      value: appointmentsCounts?.COMPLETED!,
+      value: appointmentCounts?.COMPLETED!,
       icon: BriefcaseMedical,
       className: "bg-emerald-600/15 ",
       iconClassName: "bg-emerald-600/25 text-emerald-600",
       notes: "Successful appointments",
     },
   ];
+
 
   return (
     <div className="py-6 px-3 flex flex-col xl:flex-row gap-6 items-start">
@@ -84,9 +87,11 @@ const PatientDashboard = async () => {
             ))}
           </div>
         </div>
-        <div className="w-[500px]">
-          {/* <AppointmentChart data={monthlyData}/> */}
+        <div className="h-[500px]">
+          <AppointmentChart data={monthlyData}/>
         </div>
+
+
         <div className="bg-white rounded-xl p-4 mt-8">
           {/* <RecentAppointments data={last5Records}/> */}
         </div>
@@ -94,7 +99,7 @@ const PatientDashboard = async () => {
       {/* RIGHT */}
       <div className="w-full xl:w-[30%]">
         <div className="w-full h-[300px] mb-8">
-          <StatSummary data={appointmentsCounts} total={totalAppointments} />
+          <StatSummary data={appointmentCounts} total={totalAppointments} />
         </div>
         {/* <AvailableDoctors data={availableDoctor}/> */}
         {/* <PatientRatingsContainer/> */}
