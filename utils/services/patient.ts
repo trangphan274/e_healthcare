@@ -1,5 +1,6 @@
 import db from "@/lib/db";
 import{ endOfYear, format, getMonth, startOfYear } from "date-fns";
+import { daysOfweek } from "..";
 
 type AppointmentStatus = "PENDING" | "SCHEDULED" | "PENDING" | "COMPLETED" | "CANCELLED";
 
@@ -95,25 +96,48 @@ export async function getPatientDashBoardStatistics(id: string) {
                         specialization:true,
                     },
                 },
+                patient:{
+                    select:{                       
+                        first_name:true,
+                        last_name:true,
+                        gender:true,
+                        date_of_birth:true,
+                        img:true,
+                    },
+                },
             },
             orderBy: {appointment_date:"desc"},
 
         });
         //TODO: process appointment info
-        const {appointmentCounts, monthlyData} = await processAppointments(appointments)
+        const {appointmentCounts, monthlyData} = await processAppointments(appointments);
         const last5Records = appointments.slice(0,5);
+
+        const today=daysOfweek[(new Date().getDay())]
+
         const availableDoctor = await db.doctor.findMany({
-        select :{id:true,name:true, specialization:true,img:true},
+        select :{id:true,name:true, specialization:true,img:true, working_days:true},
+        where:{
+            working_days:{
+                some:{
+                    day:{
+                    equals:today,
+                    mode:"insensitive"
+                },
+
+            },
+        },
+    },
         take:6,
       });
-        
+console.log(availableDoctor);
         return{
         success: true
-        , data
-        , appointmentCounts
+        ,data
+        ,appointmentCounts
         ,last5Records
         ,totalAppointments:appointments.length
-        ,availableDoctor: null
+        ,availableDoctor
         ,monthlyData
         ,status: 200,
     };
@@ -149,4 +173,5 @@ export async function getPatientById(id: string) {
                 function startOfyear(arg0: Date) {
                     throw new Error("Function not implemented.");
                 }
+                
 

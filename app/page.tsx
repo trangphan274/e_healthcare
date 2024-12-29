@@ -31,7 +31,7 @@ export default async function Home() {
           <div className="absolute top-4 right-4 space-x-4">
           {userId ? (
               <>
-              <Link href = {'/${role}'}>
+              <Link href = {`/${role}`}>
                 <Button>                
                  View DashBoard
               </Button>

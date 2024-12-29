@@ -7,8 +7,13 @@ import { Briefcase, BriefcaseBusiness, BriefcaseMedical } from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
 import Link from "next/link";
-import { StatSummary } from "@/components/ui/charts/stat-summary";
-import {AppointmentChart} from "@/components/ui/charts/appointment-chart";
+import { StatSummary } from "@/components/charts/stat-summary";
+import {AppointmentChart} from "@/components/charts/appointment-chart";
+import { RecentAppointments } from "@/components/tables/recent-apppointment";
+import { AvailableDoctor } from "@/components/available-doctor";
+import { AvailableDoctorProps } from "@/types/data-types";
+
+
 
 const PatientDashboard = async () => {
   const user = await currentUser();
@@ -93,7 +98,7 @@ const PatientDashboard = async () => {
 
 
         <div className="bg-white rounded-xl p-4 mt-8">
-          {/* <RecentAppointments data={last5Records}/> */}
+          <RecentAppointments data={last5Records}/>
         </div>
       </div>
       {/* RIGHT */}
@@ -101,7 +106,7 @@ const PatientDashboard = async () => {
         <div className="w-full h-[300px] mb-8">
           <StatSummary data={appointmentCounts} total={totalAppointments} />
         </div>
-        {/* <AvailableDoctors data={availableDoctor}/> */}
+        <AvailableDoctor data={availableDoctor as AvailableDoctorProps}/>
         {/* <PatientRatingsContainer/> */}
       </div>
     </div>
