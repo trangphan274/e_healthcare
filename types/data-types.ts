@@ -31,3 +31,13 @@ export type Appointment ={
 
 
 }[  ]   ;
+
+export type Medicine = {
+    id: number;
+    name: string;
+    description?: string;
+    price: number;
+    quantity: number;
+    // img?: string;
+    
+};

@@ -110,14 +110,7 @@ export async function getPatientAppointment(
       return{success: true, data,
         totalPages, currentPage:PAGE_NUMBER, totalRecord,status:200};
 
-return{
-    success:true,
-    data,
-    totalPages,
-    currentPage: PAGE_NUMBER,
-    totalRecord,
-    status:200,
-};
+
     } catch (error) {
       console.log(error);
       return { success: false, message: "Internal Server Error", status: 500 };

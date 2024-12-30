@@ -274,23 +274,11 @@ model Medicine {
   description String?
   price       Float
   quantity    Int
-  pharmacy    Pharmacy  @relation(fields: [pharmacy_id], references: [id], onDelete: Cascade)
-  pharmacy_id Int
-
+  img                      String?
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
 }
 
-model Pharmacy {
-  id           Int        @id @default(autoincrement())
-  name         String
-  location     String
-  contact_info String
-  medicines    Medicine[] // Establishes the one-to-many relationship with the Medicine model
-
-  created_at   DateTime   @default(now())
-  updated_at   DateTime   @updatedAt
-}
 
 
 
