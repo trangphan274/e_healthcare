@@ -10,12 +10,14 @@ export const ProfileImage = (
         name,
         className,
         textClassName,
+        bgColor,
 
     }:{
         url?:string,
         name:string,
         className?:string;
         textClassName?:string;
+        bgColor?:string; // Hexadecimal color code for the initials. If not provided, default is #444444.
     }) => {
         if(url) return (
         <Image 
@@ -30,9 +32,11 @@ export const ProfileImage = (
         />
         );
         if(name){
-            return <div className ={cn("flex md:hidden lg:flex w-10 h-10 rpunded-full text-white text-base items-center justify-center",
+            return <div className ={cn
+                ("flex md:hidden lg:flex w-10 h-10 rpunded-full text-white text-base items-center justify-center",
             className
-            )}>
+            )}
+            style={{ backgroundColor:bgColor || "#2563eb"}}>
                 <p className ={textClassName}>{getInitials(name)}</p>
                     {getInitials(name)}
                

@@ -54,3 +54,39 @@ export const daysOfweek = [
     "friday",
     "saturday",
 ];
+ export function generateRandomColor(): string{
+    let hexColor ="";
+    do{
+        const randomInt = Math.floor(Math.random() * 16777215);
+        hexColor =`#${randomInt.toString(16).padStart(6,"0")}`;
+        }while(
+            hexColor.toLowerCase()===("000000") || hexColor.startsWith("ffffff"));
+            return hexColor;
+    }
+
+
+function formatTime(hour:number, minute: number):string{
+    const period = hour >= 12 ? "PM" : "AM";
+    const adjustedHour = hour % 12|| 12;
+    const formattedMinute = minute.toString().padStart(2,"0");
+    return `${adjustedHour}:${formattedMinute} ${period}`;
+}
+ export function generateTimes(
+    start_hour:number,
+    close_hour:number,
+    interval_in_minutes:number
+ ){
+    const times =[];
+    const startHour= start_hour;
+    const endHour = close_hour;
+    const intervalMinutes= interval_in_minutes;
+    for(let hour = startHour; hour <= endHour; hour++){
+        for(let minute =0;minute< 60; minute+= intervalMinutes){
+            if(hour >= endHour && minute>0) break;
+            const formattedTime = formatTime(hour, minute);
+            times.push({label:formattedTime, value: formattedTime});
+
+        }
+    }
+    return times;
+ }

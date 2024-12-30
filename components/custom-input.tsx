@@ -4,6 +4,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/f
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Checkbox } from './ui/checkbox';
+import { Textarea } from './ui/textarea';
 
 interface InputProps{
     type: "input" | "select" | "checkbox" | "switch" | "radio" | "textarea";
@@ -63,6 +64,17 @@ const RenderInput=({field,props}:{field:any; props:InputProps})=>{
           </div>
         </div>
       );
+      case "textarea":
+        return(
+          <FormControl>
+            <Textarea
+            type={props.inputType}
+              placeholder={props.placeholder}
+              {...field}
+              ></Textarea>
+           
+          </FormControl>
+        )
   }
 };
 

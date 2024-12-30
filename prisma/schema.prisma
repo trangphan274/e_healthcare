@@ -90,11 +90,13 @@ model Doctor {
   department            String?
   img                   String?
   availability_status   String?
+  colorCode             String?
   type                  JOBTYPE @default(FULL)
   working_days          WorkingDays[]
   appointments          Appointment[]
   ratings               Rating[]
   diagnosis             Diagnosis[] 
+  
 
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
