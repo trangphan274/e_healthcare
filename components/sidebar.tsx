@@ -132,7 +132,7 @@ export const Sidebar = async () => {
       links: [
         {
           name: "Pharmacy",
-          href: "/record/medicine",
+          href: "/pharmacy",
           access: ["patient"], 
           icon: Tablets, 
         },

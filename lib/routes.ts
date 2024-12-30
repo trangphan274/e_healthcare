@@ -31,7 +31,7 @@ type RouteAccessProps ={
 export const routeAccess: RouteAccessProps = {
   "/admin(.*)": ["admin"],
   "/patient(.*)": ["patient", "admin", "doctor", "nurse"],
-  "/doctor(.*)": ["doctor"],
+  "/doctor(.*)": ["doctor","admin"],
   "/staff(.*)": ["nurse", "lab_technician", "cashier"],
   "/record/users": ["admin"],
   "/record/doctors": ["admin"],
