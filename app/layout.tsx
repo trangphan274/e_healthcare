@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs"
 import {Toaster} from "sonner"
+import ChatBot from "@/components/chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
+        <ChatBot 
+            appId="203cd051746a89a514049244c9cf1fcda" 
+            popupWidget={true} // Hiển thị nút bật chat
+            automaticChatOpenOnNavigation={true} // Tự động mở chat
+          />
         <Toaster richColors position ='top-center'></Toaster>
       </body>
     </html>
