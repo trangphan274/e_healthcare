@@ -156,14 +156,13 @@ const renderItem =(item:DataProps)=>{
 };
 
 return (
-  <div className="bg-white rounded-xl p-2 md:p-4 2xl:p-6">
-    <div className="flex justify-between items-center">
-      <div className="hidden lg:flex items-center gap-1"></div>
-      <BriefcaseBusiness size={20} className="text-gray-500" />
-      <p className="text-2xl font-semibold">{totalRecord ?? 0}</p>
-      <span className="text-gray-500 text-sm xl:text-base">
-        Total Appointments
-      </span>
+<div className="bg-white rounded-xl p-2 md:p-4 2xl:p-6">
+  <div className="flex flex-col items-center">
+    <BriefcaseBusiness size={20} className="text-gray-500 mb-2" />
+    <p className="text-2xl font-semibold">{totalRecord ?? 0}</p>
+    <span className="text-gray-500 text-sm xl:text-base">
+      Total Appointments
+    </span>
     </div>
     <div className="w-full lg:w-fit flex items-center justify-between lg:justify-start gap-2">
       <SearchInput />

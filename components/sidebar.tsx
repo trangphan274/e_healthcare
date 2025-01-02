@@ -160,12 +160,12 @@ export const Sidebar = async () => {
           access: ["admin"],
           icon: Settings,
         },
-        {
-          name: "Box Chat", 
-          href: "/system/box-chat", 
-          access: ["doctor", "nurse", "patient"], 
-          icon: BotMessageSquare, 
-        },
+        // {
+        //   name: "Box Chat", 
+        //   href: "/system/box-chat", 
+        //   access: ["doctor", "nurse", "patient"], 
+        //   icon: BotMessageSquare, 
+        // },
       ],
     },
   ];
