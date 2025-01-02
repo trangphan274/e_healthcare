@@ -273,7 +273,7 @@ model Medicine {
   name        String
   description String?
   price       Float
-  quantity    Int
+  unit    String
   img                      String?
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt

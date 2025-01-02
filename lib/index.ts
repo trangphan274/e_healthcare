@@ -3,13 +3,6 @@ export const GENDER = [
   { label: "Female", value: "FEMALE" },
 ];
 
-export const MARITAL_STATUS = [
-  { label: "Single", value: "single" },
-  { label: "Married", value: "married" },
-  { label: "Divorced", value: "divorced" },
-  { label: "Widowed", value: "widowed" },
-  { label: "Separated", value: "separated" },
-];
 
 export const RELATION = [
   { value: "mother", label: "Mother" },

@@ -44,7 +44,7 @@ export async function getPharmacyMedicines({
           name: true,
           description: true,
           price: true,
-          quantity: true,
+          unit: true,
         },
         orderBy: { name: "asc" },
       }),

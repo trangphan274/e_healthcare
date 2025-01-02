@@ -1,48 +1,8 @@
-// import React from 'react'
-
-// const columns = [
-//   {
-//     header: "Name",
-//     key: "name",
-//   },
-//   {
-//     header: "Price",
-//     key: "price",
-//     className: "hidden md:table-cell",
-//   },
-//   {
-//     header: "Instock",
-//     key: "quantity",
-//     className: "hidden md:table-cell",
-//   },
-  
-//   {
-//     header: "Actions",
-//     key: "action",
-//   },
-// ];
-
-// const Pharmacy = async( props:{
-//   searchParams?: { [key: string]: string | undefined };
-// })=> {
-
-//   const searchParams = await props.searchParams;
-//   const page =(searchParams.p || "1") as string;
-//   const searchQuery = searchParams.q || "";
-
-//   return (
-//     <div>Pharmacy</div>
-//   )
-// }
-
-// export default Pharmacy
-
 import SearchInput from "@/components/search-input";
 import { Table } from "@/components/tables/table";
 import { Pagination } from "@/components/pagination";
-import { ProfileImage } from "@/components/profile-image";
-import { Medicine } from "@prisma/client";
 import { getPharmacyMedicines } from "@/utils/services/medicine";
+import { ViewDetailMedicine } from "@/components/view-detail-medicine";
 
 const columns = [
   {
@@ -50,52 +10,56 @@ const columns = [
     key: "name",
   },
   {
-    header: "Description",
-    key: "description",
-    className: "hidden md:table-cell",
-  },
-  {
-    header: "Price",
+    header: "Price/unit",
     key: "price",
     className: "hidden md:table-cell",
   },
   {
-    header: "Quantity",
-    key: "quantity",
+    header: "Unit",
+    key: "unit",
   },
   {
-    header: "Actions",
+    header: "Detail",
     key: "action",
   },
 ];
 
-interface DataProps extends Medicine {}
+interface DataProps {
+  id: string;
+  name: string;
+  price: number;
+  unit: number;
+}
 
-const Pharmacy = async (props: {
+const Pharmacy = async ({
+  searchParams,
+}: {
   searchParams?: { [key: string]: string | undefined };
 }) => {
-  const searchParams = await props.searchParams;
-  const page = (searchParams?.p || "1") as string;
-
-
- const searchQuery = searchParams?.q || "";
+  const searchQuery = searchParams?.q || "";
+  const page = searchParams?.p || "1";
 
   const { data, totalPages, totalRecord, currentPage } = await getPharmacyMedicines({
     page,
     search: searchQuery,
   });
 
-  if (!data) return null;
+  if (!data) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h2 className="text-xl font-semibold text-gray-600">No medicines found</h2>
+      </div>
+    );
+  }
 
   const renderItem = (item: DataProps) => (
     <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 hover:bg-slate-100">
       <td className="py-2">{item.name}</td>
-      <td className="hidden md:table-cell">{item.description}</td>
-      <td className="hidden md:table-cell">{item.price}</td>
-      <td>{item.quantity}</td>
+      <td className="hidden md:table-cell">${item.price.toFixed(2)}</td>
+      <td>{item.unit}</td>
       <td>
         <div className="flex items-center gap-2">
-          {/* Add actions here (e.g., View, Edit, Delete) */}
+          <ViewDetailMedicine id={item.id} />
         </div>
       </td>
     </tr>
@@ -117,11 +81,7 @@ const Pharmacy = async (props: {
             limit={10}
           />
         )}
-
-      
-      
-      
-  </div>
+      </div>
     </div>
   );
 };

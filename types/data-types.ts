@@ -37,7 +37,7 @@ export type Medicine = {
     name: string;
     description?: string;
     price: number;
-    quantity: number;
+    unit:string;
     // img?: string;
     
 };
